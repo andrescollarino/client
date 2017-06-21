@@ -1,0 +1,21 @@
+# Git IGNORE 
+
+# Folders
+/[Dd]ebug/
+
+# Eclipse
+.settings/
+.cproject
+
+*.swp
+*.bak
+*.tmp
+*~.nib
+
+.metadata
+
+# Extencions
+*.o
+
+# Specific Files
+log.txt
