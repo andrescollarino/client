@@ -1,32 +1,48 @@
 #include <Engine.h>
 
+#define MAX_KEY				500
+#define MAX_MOUSE_BUTTON	50
+
 namespace {
 
-GLFWwindow* g_window = nullptr;
+GLFWwindow* 	g_window = nullptr;
 
 // Input
+bool 			g_enableTextInput = false;
+bool* 			g_keys = nullptr;
+glm::vec2 		g_mousePosition;
+bool*			g_mouseButton = nullptr;
+glm::vec2		g_scrollOffset;
+std::wstring 	g_inputText;
+
 };
 
 namespace {
 
 	void InputCharacterCallBack(GLFWwindow* window,unsigned int key)
 	{
-		DEBUG_LOG("Input Text : " + std::to_string((char)key));
+		if(g_enableTextInput)
+			g_inputText.push_back(static_cast<wchar_t>(key));
 	}
 
 	void InputKeyCallBack(GLFWwindow* window,int key,int scanCode,int action,int mods)
 	{
-		DEBUG_LOG("Input Key : " + std::to_string((char)key));
+		if(action == GLFW_PRESS)
+			g_keys[key] = true;
+
+		if(action == GLFW_RELEASE)
+			g_keys[key] = false;
 	}
 
 	void InputMousePositionCallBack(GLFWwindow* window,double x, double y)
 	{
-		DEBUG_LOG("Mouse Position : " + std::to_string((int)x) + "," + std::to_string((int)y));
+		g_mousePosition.x = static_cast<int>(x);
+		g_mousePosition.y = static_cast<int>(y);
 	}
 
 	void InputMouseEnterCallBack(GLFWwindow* window,int entered)
 	{
-		DEBUG_LOG("Mouse Enter");
+		//DEBUG_LOG("Mouse Enter");
 	}
 
 	void InpuMouseButtonCallBack(GLFWwindow* window,int button,int action,int mods)
@@ -36,11 +52,15 @@ namespace {
 
 	void InputMouseScrollCallBack(GLFWwindow* window,double xoffset,double yoffset)
 	{
-		DEBUG_LOG("Mouse Scrool");
+		g_scrollOffset.x = static_cast<float>(xoffset);
+		g_scrollOffset.y = static_cast<float>(yoffset);
 	}
 };
 
 bool Engine::Initialize(int w, int h, std::string title) {
+
+	DEBUG_LOG("Initialize Engine");
+
 	if (!glfwInit()) {
 		DEBUG_ERROR("Failed initialize GLFW3.");
 		return ENGINE_ERROR;
@@ -77,6 +97,15 @@ bool Engine::Initialize(int w, int h, std::string title) {
 	}
 
 	// Initialize Input
+	g_keys = new bool[MAX_KEY];
+	g_mouseButton = new bool[MAX_MOUSE_BUTTON];
+
+	// Clear Keys
+	for(auto k : g_keys) k = false;
+	// Clear Mouse Buttons
+	for(auto m : g_mouseButton) m = false;
+
+	// Initialize Input Callbaks
 	glfwSetCharCallback(g_window ,InputCharacterCallBack);
 	glfwSetKeyCallback(g_window,InputKeyCallBack);
 	glfwSetCursorPosCallback(g_window,InputMousePositionCallBack);
@@ -98,6 +127,10 @@ void Engine::Run() {
 }
 
 void Engine::Release() {
+
+	Memory::DeleteArray(g_keys);
+	Memory::DeleteArray(g_mouseButton);
+
 	glfwTerminate();
 }
 
