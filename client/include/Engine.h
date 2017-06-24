@@ -9,6 +9,7 @@
 
 #include "Debug.h"
 #include "Memory.h"
+#include "Transform.h"
 
 #define ENGINE_ERROR true
 
@@ -135,6 +136,13 @@ enum class KeyCode
 	RightAlt = GLFW_KEY_RIGHT_ALT,
 	RightSumer = GLFW_KEY_RIGHT_SUPER,
 	Menu = GLFW_KEY_MENU,
+};
+
+class GameObject
+{
+  public:
+  protected:
+  private:
 };
 
 namespace Input

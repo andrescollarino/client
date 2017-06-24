@@ -10,9 +10,12 @@ set(ProjectName Client)
 # C++11
 add_compile_options(-std=c++11)
 
-set(SourceObj src/Main.cpp 
+set(SourceObj 
+    src/Main.cpp 
     src/Debug.cpp
-    src/Engine.cpp)
+    src/Engine.cpp
+    src/Transform.cpp
+    )
 
 # Glew Library
 find_package(GLEW REQUIRED)
