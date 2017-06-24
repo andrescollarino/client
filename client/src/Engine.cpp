@@ -33,6 +33,12 @@ void InputKeyCallBack(GLFWwindow *window, int key, int scanCode, int action, int
 
 	if (action == GLFW_RELEASE)
 		g_keys[key] = false;
+
+	if (g_enableTextInput)
+	{
+		if (key == GLFW_KEY_BACKSPACE && (action == GLFW_PRESS || action == GLFW_RELEASE))
+			g_inputText.pop_back();
+	}
 }
 
 void InputMousePositionCallBack(GLFWwindow *window, double x, double y)
@@ -48,7 +54,7 @@ void InputMouseEnterCallBack(GLFWwindow *window, int entered)
 
 void InpuMouseButtonCallBack(GLFWwindow *window, int button, int action, int mods)
 {
-	DEBUG_LOG("Mouse Button");
+	//DEBUG_LOG("Mouse Button");
 }
 
 void InputMouseScrollCallBack(GLFWwindow *window, double xoffset, double yoffset)
@@ -69,8 +75,41 @@ void ClearInput()
 	// Clear Mouse Buttons
 	for (auto i = 0; i < MAX_MOUSE_BUTTON; i++)
 		g_mouseButton[i] = false;
+
+	Input::DisableInputText();
 }
 };
+
+void Input::EnableInputText()
+{
+	g_enableTextInput = true;
+	g_inputText.clear();
+}
+
+void Input::DisableInputText()
+{
+	g_enableTextInput = false;
+}
+
+std::wstring Input::GetInputText()
+{
+	return g_inputText;
+}
+
+glm::vec2 Input::GetMousePosition()
+{
+	return g_mousePosition;
+}
+
+bool Input::GetKey(KeyCode code)
+{
+	return g_keys[static_cast<int>(code)];
+}
+
+bool Input::IsInputTextEnable()
+{
+	return g_enableTextInput;
+}
 
 bool Engine::Initialize(int w, int h, std::string title)
 {

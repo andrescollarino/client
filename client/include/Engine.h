@@ -10,7 +10,7 @@
 #include "Debug.h"
 #include "Memory.h"
 
-#define ENGINE_ERROR	true
+#define ENGINE_ERROR true
 
 enum class KeyCode
 {
@@ -135,15 +135,25 @@ enum class KeyCode
 	RightAlt = GLFW_KEY_RIGHT_ALT,
 	RightSumer = GLFW_KEY_RIGHT_SUPER,
 	Menu = GLFW_KEY_MENU,
-
 };
 
-namespace Input {
+namespace Input
+{
+void EnableInputText();
+void DisableInputText();
 
+std::wstring GetInputText();
+
+glm::vec2 GetMousePosition();
+
+bool GetKey(KeyCode code);
+
+bool IsInputTextEnable();
 };
 
-namespace Engine {
-	bool Initialize(int w, int h, std::string title);
-	void Run();
-	void Release();
+namespace Engine
+{
+bool Initialize(int w, int h, std::string title);
+void Run();
+void Release();
 };
