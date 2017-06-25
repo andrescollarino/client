@@ -1,7 +1,11 @@
 #include <Engine.h>
 
+#include <vector>
+
 #define MAX_KEY 500
 #define MAX_MOUSE_BUTTON 50
+
+class GameObject; // Friend Class
 
 namespace
 {
@@ -168,6 +172,9 @@ bool Engine::Initialize(int w, int h, std::string title)
 	glfwSetMouseButtonCallback(g_window, InpuMouseButtonCallBack);
 	glfwSetScrollCallback(g_window, InputMouseScrollCallBack);
 
+	// GameObjects
+	GameObjectManager::Initialize();
+
 	return !ENGINE_ERROR;
 }
 
@@ -175,6 +182,14 @@ void Engine::Run()
 {
 	do
 	{
+		// Update
+		GameObjectManager::Update(0);
+		// LateUpdate
+		GameObjectManager::LateUpdate(0);
+		// Culling
+
+		// Renderer
+
 		glfwSwapBuffers(g_window);
 		glfwPollEvents();
 
@@ -185,9 +200,12 @@ void Engine::Run()
 
 void Engine::Release()
 {
-
+	GameObjectManager::Release();
 	Memory::DeleteArray(g_keys);
 	Memory::DeleteArray(g_mouseButton);
 
 	glfwTerminate();
 }
+
+
+

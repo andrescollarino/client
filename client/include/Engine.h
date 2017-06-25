@@ -9,7 +9,7 @@
 
 #include "Debug.h"
 #include "Memory.h"
-#include "Transform.h"
+#include "GameObject.h"
 
 #define ENGINE_ERROR true
 
@@ -138,12 +138,6 @@ enum class KeyCode
 	Menu = GLFW_KEY_MENU,
 };
 
-class GameObject
-{
-  public:
-  protected:
-  private:
-};
 
 namespace Input
 {
