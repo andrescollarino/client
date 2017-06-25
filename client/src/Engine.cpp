@@ -182,6 +182,8 @@ void Engine::Run()
 {
 	do
 	{
+		// Destroy GameObjects
+		GameObjectManager::Refresh();
 		// Update
 		GameObjectManager::Update(0);
 		// LateUpdate
@@ -190,8 +192,12 @@ void Engine::Run()
 
 		// Renderer
 
+
+
 		glfwSwapBuffers(g_window);
 		glfwPollEvents();
+
+
 
 	} while (glfwWindowShouldClose(g_window) == 0);
 

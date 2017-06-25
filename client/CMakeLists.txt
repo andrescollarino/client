@@ -16,6 +16,7 @@ set(SourceObj
     src/Engine.cpp
     src/Transform.cpp
     src/GameObject.cpp
+    src/GameObjectManager.cpp
     )
 
 # Glew Library
