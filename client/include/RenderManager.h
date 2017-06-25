@@ -4,8 +4,8 @@
 
 #include "Color.h"
 #include "Memory.h"
+#include "Bounds.h"
 
-/*
 class IRenderer
 {
     public:
@@ -13,7 +13,8 @@ class IRenderer
     IRenderer();
     virtual ~IRenderer();
 
-};*/
+
+};
 
 
 namespace RenderManager

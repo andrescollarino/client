@@ -18,6 +18,7 @@ set(SourceObj
     src/GameObject.cpp
     src/GameObjectManager.cpp
     src/RenderManager.cpp
+    src/Bounds.cpp
     )
 
 # Glew Library
