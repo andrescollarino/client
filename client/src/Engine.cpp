@@ -19,6 +19,11 @@ glm::vec2 g_mousePosition;
 bool *g_mouseButton = nullptr;
 glm::vec2 g_scrollOffset;
 std::wstring g_inputText;
+
+// Delta Time
+float g_lastTime = 0.0f;
+float g_deltaTime = 0.0f;
+float g_deltaTimeScale = 1.0f;
 };
 
 namespace
@@ -83,6 +88,26 @@ void ClearInput()
 	Input::DisableInputText();
 }
 };
+
+float Time::Scale()
+{
+	return g_deltaTimeScale;
+}
+
+void Time::SetScale(float scale)
+{
+	g_deltaTimeScale = scale;
+}
+
+float Time::DeltaTime()
+{
+	return g_deltaTime * g_deltaTimeScale;
+}
+
+float Time::UnscaleDeltaTime()
+{
+	return g_deltaTime;
+}
 
 void Input::EnableInputText()
 {
@@ -175,6 +200,9 @@ bool Engine::Initialize(int w, int h, std::string title)
 	// GameObjects
 	GameObjectManager::Initialize();
 
+	// Time
+	g_lastTime = static_cast<float>(glfwGetTime());
+
 	return !ENGINE_ERROR;
 }
 
@@ -182,22 +210,23 @@ void Engine::Run()
 {
 	do
 	{
+		// Time
+		auto currentTime = static_cast<float>(glfwGetTime());
+		g_deltaTime = currentTime - g_lastTime;
+		g_lastTime = currentTime;
+
 		// Destroy GameObjects
 		GameObjectManager::Refresh();
 		// Update
-		GameObjectManager::Update(0);
+		GameObjectManager::Update(Time::DeltaTime());
 		// LateUpdate
-		GameObjectManager::LateUpdate(0);
+		GameObjectManager::LateUpdate(Time::DeltaTime());
 		// Culling
 
 		// Renderer
 
-
-
 		glfwSwapBuffers(g_window);
 		glfwPollEvents();
-
-
 
 	} while (glfwWindowShouldClose(g_window) == 0);
 
@@ -212,6 +241,3 @@ void Engine::Release()
 
 	glfwTerminate();
 }
-
-
-
