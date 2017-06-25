@@ -11,6 +11,7 @@
 #include "Memory.h"
 #include "KeyCode.h"
 #include "GameObject.h"
+#include "RenderManager.h"
 
 #define ENGINE_ERROR true
 

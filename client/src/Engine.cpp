@@ -203,6 +203,9 @@ bool Engine::Initialize(int w, int h, std::string title)
 	// Time
 	g_lastTime = static_cast<float>(glfwGetTime());
 
+	// Render
+	RenderManager::Initialize();
+
 	return !ENGINE_ERROR;
 }
 
@@ -221,9 +224,9 @@ void Engine::Run()
 		GameObjectManager::Update(Time::DeltaTime());
 		// LateUpdate
 		GameObjectManager::LateUpdate(Time::DeltaTime());
-		// Culling
-
+	
 		// Renderer
+		RenderManager::Draw();
 
 		glfwSwapBuffers(g_window);
 		glfwPollEvents();
@@ -235,7 +238,9 @@ void Engine::Run()
 
 void Engine::Release()
 {
+	RenderManager::Release();
 	GameObjectManager::Release();
+	
 	Memory::DeleteArray(g_keys);
 	Memory::DeleteArray(g_mouseButton);
 
