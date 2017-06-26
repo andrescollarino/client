@@ -2,6 +2,8 @@
 
 #include <cstdint>
 #include <cstring>
+#include <string>
+#include <sstream>
 
 #include "FMath.h"
 
@@ -52,6 +54,19 @@ struct Color
         this->g = color.g;
         this->b = color.b;
         this->a = color.a;
+    };
+
+    std::string ToString()
+    {
+        std::ostringstream out;
+        
+        out << "(" <<std::setprecision(2) << r;
+        out << "," <<std::setprecision(2) << g;
+        out << "," <<std::setprecision(2) << b;
+        out << "," <<std::setprecision(2) << a;
+        out << ")";
+
+        return out.str();
     };
 
     static Color Lerp(const Color &a, const Color &b, float t)

@@ -55,7 +55,7 @@ class InitializeObject : public GameObject
 int main(int carg, char **arg)
 {
 	Engine::Initialize(1024, 768, "Argentum Online");
-	GameObject::Instantiate<InitializeObject>();
+	//GameObject::Instantiate<InitializeObject>();
 	Engine::Run();
 
 	return 0;
